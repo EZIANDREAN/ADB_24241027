@@ -1,0 +1,45 @@
+CREATE TABLE POLIKLINIK (
+  kode_poli INT PRIMARY KEY,
+  nama_poli VARCHAR(30)
+);
+
+CREATE TABLE DOKTER (
+  id_dokter INT PRIMARY KEY,
+  nama VARCHAR(30),
+  sp VARCHAR(30),
+  no_tlp INT,
+  kode_poli INT,
+  FOREIGN KEY (kode_poli) REFERENCES POLIKLINIK(kode_poli)
+);
+
+CREATE TABLE PASIEN (
+  NIK INT PRIMARY KEY,
+  nama VARCHAR(30),
+  alamat VARCHAR(30),
+  sex BOOLEAN,
+  BDD TIMESTAMP
+);
+
+CREATE TABLE PENDAFTARAN (
+  no_antrian INT PRIMARY KEY,
+  kode_poli INT,
+  NIK INT,
+  tgl_daftar DATETIME,
+  FOREIGN KEY (kode_poli) REFERENCES POLIKLINIK(kode_poli),
+  FOREIGN KEY (NIK) REFERENCES PASIEN(NIK)
+);
+
+CREATE TABLE OBAT (
+  kode_obat INT PRIMARY KEY,
+  nama_obat VARCHAR(50),
+  harga INT
+);
+
+CREATE TABLE REKAM_MEDIS (
+  no_rm INT PRIMARY KEY,
+  NIK INT,
+  kode_obat INT,
+  tgl_rm TIMESTAMP,
+  FOREIGN KEY (NIK) REFERENCES PASIEN(NIK),
+  FOREIGN KEY (kode_obat) REFERENCES OBAT(kode_obat)
+);
